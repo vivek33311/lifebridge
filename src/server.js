@@ -12,6 +12,7 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { RATE_LIMIT } from './config/constants.js';
+import { getHealthStatus } from './controllers/healthController.js';
 import analyzeRouter from './routes/analyze.js';
 import { formatErrorResponse } from './utils/errors.js';
 
@@ -74,13 +75,7 @@ app.use('/src', express.static(path.join(__dirname, '../src')));
 app.use(express.static(path.join(__dirname, '../public')));
 
 // 6. Health Check Probe
-app.get('/healthz', (_req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    service: 'LifeBridge',
-    timestamp: new Date().toISOString()
-  });
-});
+app.get('/healthz', getHealthStatus);
 
 // 7. API Routes
 app.use('/api', analyzeRouter);

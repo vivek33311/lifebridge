@@ -15,11 +15,11 @@
 
 | Challenge Statement Phrase | Implemented Feature in LifeBridge | Source File & Implementation |
 | :--- | :--- | :--- |
-| **"Unstructured, messy, real-world inputs"** | Accepts noisy English, Hindi, and Hinglish speech-to-text transcripts, chaotic bystander text notes, and multimodal photos (blistering burns, medicine strips, accident scenes) up to 4 MB with client-side canvas compression. | [`public/app.js`](file:///src/public/app.js), [`src/utils/validation.js`](file:///src/utils/validation.js), [`src/services/gemini.js`](file:///src/services/gemini.js) |
-| **"Structured"** | Gemini Flash translates messy multimodal data into a strictly typed schema with situation summary, urgency classification, extracted clinical facts (conditions, medications, allergies, symptoms), missing info, and 108 dispatch script. | [`src/services/gemini.js`](file:///src/services/gemini.js) (`GEMINI_UNDERSTAND_SCHEMA`), [`src/utils/validation.js`](file:///src/utils/validation.js) |
-| **"Verified"** | Three-layer verification pipeline: **Layer A** (AI corroboration marking facts `SUPPORTED`/`INFERRED`/`UNSUPPORTED` and pruning assumptions), **Layer B** (deterministic non-AI clinical rules overriding harmful actions like inducing vomiting, allergy conflicts, burns ice), and **Layer C** (dual-run consistency check escalating urgency). | [`src/services/verifier.js`](file:///src/services/verifier.js), [`src/services/safetyRules.js`](file:///src/services/safetyRules.js) |
-| **"Life-saving actions"** | Bystander checklist with priority timing tags, one-touch **Call 108** (`tel:108`) with tailored operator script, instant **WhatsApp emergency dispatch share**, **Copy for Doctor** clinical summary, and Web Speech **Read Aloud**. | [`public/index.html`](file:///src/public/index.html), [`public/app.js`](file:///src/public/app.js) |
-| **"Universal bridge between human intent and complex systems"** | Transforms panicked, unstructured human communications into formal emergency EMS dispatch protocols and structured triage handoffs readable by hospital personnel and ambulance coordinators. | [`src/routes/analyze.js`](file:///src/routes/analyze.js), [`examples/`](file:///examples/) |
+| **"Unstructured, messy, real-world inputs"** | Accepts noisy English, Hindi, and Hinglish speech-to-text transcripts, chaotic bystander text notes, and multimodal photos (blistering burns, medicine strips, accident scenes) up to 4 MB with client-side canvas compression. | [`frontend/public/app.js`](file:///frontend/public/app.js), [`backend/src/utils/validation.js`](file:///backend/src/utils/validation.js), [`backend/src/services/gemini.js`](file:///backend/src/services/gemini.js) |
+| **"Structured"** | Gemini Flash translates messy multimodal data into a strictly typed schema with situation summary, urgency classification, extracted clinical facts (conditions, medications, allergies, symptoms), missing info, and 108 dispatch script. | [`backend/src/services/gemini.js`](file:///backend/src/services/gemini.js), [`backend/src/models/triageModel.js`](file:///backend/src/models/triageModel.js) |
+| **"Verified"** | Three-layer verification pipeline: **Layer A** (AI corroboration marking facts `SUPPORTED`/`INFERRED`/`UNSUPPORTED` and pruning assumptions), **Layer B** (deterministic non-AI clinical rules overriding harmful actions like inducing vomiting, allergy conflicts, burns ice), and **Layer C** (dual-run consistency check escalating urgency). | [`backend/src/services/verifier.js`](file:///backend/src/services/verifier.js), [`backend/src/services/safetyRules.js`](file:///backend/src/services/safetyRules.js) |
+| **"Life-saving actions"** | Bystander checklist with priority timing tags, one-touch **Call 108** (`tel:108`) with tailored operator script, instant **WhatsApp emergency dispatch share**, **Copy for Doctor** clinical summary, and Web Speech **Read Aloud**. | [`frontend/public/index.html`](file:///frontend/public/index.html), [`frontend/public/app.js`](file:///frontend/public/app.js) |
+| **"Universal bridge between human intent and complex systems"** | Transforms panicked, unstructured human communications into formal emergency EMS dispatch protocols and structured triage handoffs readable by hospital personnel and ambulance coordinators. | [`backend/src/routes/analyze.js`](file:///backend/src/routes/analyze.js), [`backend/src/controllers/analyzeController.js`](file:///backend/src/controllers/analyzeController.js), [`examples/`](file:///examples/) |
 
 ---
 
@@ -116,12 +116,13 @@ LifeBridge uses Node.js 20+'s native test runner (`node --test`) with 43 automat
 
 | Test File | Test Count | Scope & Behaviors Covered |
 | :--- | :--- | :--- |
-| `tests/validation.test.js` | 9 | Empty payloads, text length caps, image MIME allowlisting, base64 decoding bounds, strict schema parsing. |
-| `tests/safetyRules.test.js` | 8 | Anti-vomiting override, Aspirin-NSAID allergy conflicts, Penicillin conflicts, unconscious oral intake restrictions, burn remedies, trauma movement block. |
-| `tests/verifier.test.js` | 5 | Layer A unsupported fact pruning, Layer B deterministic overrides, Layer C urgency escalation, verification status scoring (`VERIFIED`, `VERIFIED_WITH_WARNINGS`, `NEEDS_HUMAN_REVIEW`). |
-| `tests/gemini.test.js` | 7 | Missing API key exceptions, multimodal payload assembly, exponential backoff retries, empty upstream handling. |
-| `tests/sanitize.test.js` | 6 | Control character stripping, delimiter tag neutralization, Hindi Unicode preservation, HTML escaping. |
-| `tests/analyzeRoute.test.js` | 8 | End-to-end HTTP pipeline, validation rejections (400), rate limiting headers, caching (X-Cache: HIT), offline fallback (`STATIC_EMERGENCY_FALLBACK`). |
+| `backend/tests/validation.test.js` | 9 | Empty payloads, text length caps, image MIME allowlisting, base64 decoding bounds, strict schema parsing. |
+| `backend/tests/safetyRules.test.js` | 8 | Anti-vomiting override, Aspirin-NSAID allergy conflicts, Penicillin conflicts, unconscious oral intake restrictions, burn remedies, trauma movement block. |
+| `backend/tests/verifier.test.js` | 5 | Layer A unsupported fact pruning, Layer B deterministic overrides, Layer C urgency escalation, verification status scoring (`VERIFIED`, `VERIFIED_WITH_WARNINGS`, `NEEDS_HUMAN_REVIEW`). |
+| `backend/tests/gemini.test.js` | 7 | Missing API key exceptions, multimodal payload assembly, exponential backoff retries, empty upstream handling. |
+| `backend/tests/sanitize.test.js` | 6 | Control character stripping, delimiter tag neutralization, Hindi Unicode preservation, HTML escaping. |
+| `backend/tests/analyzeRoute.test.js` | 8 | End-to-end HTTP pipeline, validation rejections (400), rate limiting headers, caching (X-Cache: HIT), offline fallback (`STATIC_EMERGENCY_FALLBACK`). |
+| `frontend/tests/bridge3d.test.js` | 3 | Parabolic cable curve math, vertical hanger counts and deck clearance, structural tower dimensions and X-bracing. |
 
 ### E. Accessibility (WCAG 2.1 AA Compliant)
 - **Semantic Landmarks**: Standard `<header>`, `<main>`, `<section>`, `<nav>`, `<footer>` elements.

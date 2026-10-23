@@ -2,12 +2,14 @@
   "name": "lifebridge",
   "version": "1.0.0",
   "description": "Universal Gemini-powered bridge converting messy emergency inputs into structured, verified, life-saving actions",
-  "main": "src/server.js",
+  "main": "backend/src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "test": "node --test tests/analyzeRoute.test.js tests/gemini.test.js tests/safetyRules.test.js tests/sanitize.test.js tests/validation.test.js tests/verifier.test.js && vitest run tests/bridge3d.test.js"
+    "start": "node backend/src/server.js",
+    "dev": "node --watch backend/src/server.js",
+    "test": "node --test backend/tests/analyzeRoute.test.js backend/tests/gemini.test.js backend/tests/safetyRules.test.js backend/tests/sanitize.test.js backend/tests/validation.test.js backend/tests/verifier.test.js && vitest run frontend/tests/bridge3d.test.js",
+    "test:backend": "node --test backend/tests/analyzeRoute.test.js backend/tests/gemini.test.js backend/tests/safetyRules.test.js backend/tests/sanitize.test.js backend/tests/validation.test.js backend/tests/verifier.test.js",
+    "test:frontend": "vitest run frontend/tests/bridge3d.test.js"
   },
   "engines": {
     "node": ">=20.0.0"

@@ -1,0 +1,18 @@
+{
+  "name": "lifebridge-frontend",
+  "version": "1.0.0",
+  "description": "LifeBridge accessible emergency editorial studio and procedural 3D Manhattan bridge visualizer",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run tests/bridge3d.test.js"
+  },
+  "dependencies": {
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.5"
+  }
+}

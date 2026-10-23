@@ -99,7 +99,7 @@
    * 1. PROCEDURAL 3D MANHATTAN BRIDGE (Lazy-loaded Three.js via npm)
    */
   if (bridgeContainer) {
-    import('/src/ui/bridge3d.js')
+    import('/src/bridge3d.js')
       .then(({ initBridge3D }) => {
         initBridge3D(bridgeContainer);
       })

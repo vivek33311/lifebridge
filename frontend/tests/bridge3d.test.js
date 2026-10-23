@@ -11,7 +11,7 @@ import {
   calculateCableCurve,
   calculateHangerPositions,
   getTowerDimensions
-} from '../src/ui/bridge3d.js';
+} from '../src/bridge3d.js';
 
 describe('Manhattan Bridge 3D Geometry Specifications', () => {
   // Test 1: Cable curve

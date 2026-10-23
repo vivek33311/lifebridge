@@ -70,9 +70,12 @@ const apiLimiter = rateLimit({
 app.use('/api', apiLimiter);
 
 // 5. Static Assets (Vanilla HTML/CSS/JS frontend & self-hosted modules)
-app.use('/vendor/three', express.static(path.join(__dirname, '../node_modules/three/build')));
-app.use('/src', express.static(path.join(__dirname, '../src')));
-app.use(express.static(path.join(__dirname, '../public')));
+const frontendDir = path.resolve(__dirname, '../../frontend');
+const rootNodeModules = path.resolve(__dirname, '../../node_modules');
+
+app.use('/vendor/three', express.static(path.join(rootNodeModules, 'three/build')));
+app.use('/src', express.static(path.join(frontendDir, 'src')));
+app.use(express.static(path.join(frontendDir, 'public')));
 
 // 6. Health Check Probe
 app.get('/healthz', getHealthStatus);

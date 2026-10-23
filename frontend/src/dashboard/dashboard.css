@@ -1,0 +1,1106 @@
+/**
+ * LifeBridge Clinical Dashboard Editorial Styling
+ * Aligned with warm paper (#f6f5f0), pigment rust (#b33927), and ink tones.
+ * Strict WCAG AA contrast, touch targets >= 44px, and reduced motion compliance.
+ */
+
+:root {
+  --dash-bg: #f8f7f2;
+  --dash-surface: #ffffff;
+  --dash-surface-subtle: #fcfbf8;
+  --dash-border: #e6e2da;
+  --dash-border-dark: #cfcac0;
+  --dash-text: #1f1e1c;
+  --dash-text-muted: #6e6a62;
+  --dash-pigment: #b33927;
+  --dash-pigment-hover: #9c2f1f;
+  --dash-pigment-subtle: rgba(179, 57, 39, 0.08);
+  --dash-amber: #d97706;
+  --dash-amber-subtle: rgba(217, 119, 6, 0.1);
+  --dash-teal: #4b6b75;
+  --dash-teal-subtle: rgba(75, 107, 117, 0.1);
+  --dash-sage: #3f6212;
+  --dash-sage-subtle: rgba(63, 98, 18, 0.1);
+  --dash-shadow-sm: 0 1px 3px rgba(31, 30, 28, 0.05);
+  --dash-shadow-md: 0 4px 12px rgba(31, 30, 28, 0.08);
+  --dash-shadow-lg: 0 12px 32px rgba(31, 30, 28, 0.12);
+}
+
+/* ==========================================================================
+   DASHBOARD ROOT CONTAINER & LAYOUT
+   ========================================================================== */
+
+.dashboard-root {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--dash-bg);
+  color: var(--dash-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  z-index: 100;
+}
+
+/* 1. LEFT SIDEBAR */
+.dash-sidebar {
+  width: 280px;
+  background-color: var(--dash-surface);
+  border-right: 1px solid var(--dash-border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 105;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dash-sidebar-header {
+  padding: 24px 20px 18px;
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.dash-brand-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--dash-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.dash-brand-title .period {
+  color: var(--dash-pigment);
+}
+
+.dash-brand-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--dash-text-muted);
+  margin-top: 4px;
+}
+
+.dash-sidebar-nav {
+  padding: 18px 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.dash-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-nav-item button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--dash-text-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  min-height: 44px;
+}
+
+.dash-nav-item button:hover {
+  background-color: var(--dash-surface-subtle);
+  color: var(--dash-text);
+}
+
+.dash-nav-item button.active {
+  background-color: var(--dash-pigment-subtle);
+  color: var(--dash-pigment);
+  border-color: rgba(179, 57, 39, 0.2);
+  font-weight: 600;
+}
+
+.dash-nav-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.dash-sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--dash-border);
+  background-color: var(--dash-surface-subtle);
+}
+
+.dash-user-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dash-user-info {
+  overflow: hidden;
+}
+
+.dash-user-name {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-user-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--dash-text-muted);
+}
+
+.dash-btn-logout {
+  background: none;
+  border: 1px solid var(--dash-border);
+  border-radius: 3px;
+  padding: 6px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-btn-logout:hover {
+  background-color: #fee2e2;
+  color: var(--dash-pigment);
+  border-color: #fca5a5;
+}
+
+.dash-back-terminal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border: 1px solid var(--dash-border);
+  color: var(--dash-text-muted);
+  cursor: pointer;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.dash-back-terminal:hover {
+  background-color: var(--dash-surface);
+  color: var(--dash-text);
+  border-color: var(--dash-border-dark);
+}
+
+/* 2. MAIN CONTENT AREA */
+.dash-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.dash-topbar {
+  padding: 16px 32px;
+  background-color: var(--dash-surface);
+  border-bottom: 1px solid var(--dash-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.dash-mobile-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.dash-view-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dash-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 44px;
+  transition: all 0.15s ease;
+}
+
+.dash-btn-primary {
+  background-color: #1f1e1c;
+  color: #ffffff;
+  border: 1px solid #1f1e1c;
+}
+
+.dash-btn-primary:hover {
+  background-color: #383633;
+}
+
+.dash-btn-sos {
+  background-color: var(--dash-pigment);
+  color: #ffffff;
+  border: 1px solid var(--dash-pigment);
+  font-weight: 600;
+}
+
+.dash-btn-sos:hover {
+  background-color: var(--dash-pigment-hover);
+}
+
+.dash-btn-outline {
+  background-color: transparent;
+  color: var(--dash-text);
+  border: 1px solid var(--dash-border-dark);
+}
+
+.dash-btn-outline:hover {
+  background-color: var(--dash-surface);
+  border-color: var(--dash-text);
+}
+
+.dash-content-body {
+  padding: 32px;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   OVERVIEW VIEW: STATS & CHARTS
+   ========================================================================== */
+
+.dash-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.dash-stat-card {
+  background-color: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: var(--dash-shadow-sm);
+}
+
+.dash-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dash-text-muted);
+  margin-bottom: 8px;
+}
+
+.dash-stat-value {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--dash-text);
+  line-height: 1.1;
+}
+
+.dash-stat-desc {
+  font-size: 12px;
+  color: var(--dash-text-muted);
+  margin-top: 6px;
+}
+
+.dash-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.dash-card {
+  background-color: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  padding: 24px;
+  box-shadow: var(--dash-shadow-sm);
+}
+
+.dash-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.dash-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.chart-svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.urgency-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--dash-border);
+}
+
+.urgency-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   HISTORY TABLE & SEARCH / FILTER / PAGINATION
+   ========================================================================== */
+
+.history-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.history-search-input {
+  flex: 1;
+  min-width: 240px;
+  padding: 10px 14px;
+  border: 1px solid var(--dash-border-dark);
+  background-color: var(--dash-surface);
+  font-size: 13.5px;
+  border-radius: 3px;
+  min-height: 44px;
+}
+
+.history-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 8px 14px;
+  border: 1px solid var(--dash-border);
+  background: var(--dash-surface);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.filter-pill:hover {
+  background-color: var(--dash-surface-subtle);
+  border-color: var(--dash-border-dark);
+}
+
+.filter-pill.active {
+  background-color: #1f1e1c;
+  color: #ffffff;
+  border-color: #1f1e1c;
+}
+
+.history-sort-select {
+  padding: 10px 12px;
+  border: 1px solid var(--dash-border-dark);
+  background-color: var(--dash-surface);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border-radius: 3px;
+  min-height: 44px;
+}
+
+.dash-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  background-color: var(--dash-surface);
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.dash-table th {
+  background-color: var(--dash-surface-subtle);
+  padding: 14px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dash-text-muted);
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.dash-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--dash-border);
+  vertical-align: middle;
+}
+
+.dash-table tr:hover {
+  background-color: #fbfaf6;
+}
+
+/* URGENCY BADGES (ICON + TEXT, NOT COLOR ALONE) */
+.badge-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.badge-urgency-critical {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #f87171;
+}
+
+.badge-urgency-high {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.badge-urgency-medium {
+  background-color: #e0f2fe;
+  color: #075985;
+  border: 1px solid #38bdf8;
+}
+
+.badge-urgency-low {
+  background-color: #ecfccb;
+  color: #3f6212;
+  border: 1px solid #84cc16;
+}
+
+.badge-sample {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background-color: #f3f0e6;
+  color: #78716c;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid #e7e5e4;
+  margin-left: 6px;
+}
+
+.badge-verified {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #1e3a8a;
+}
+
+/* PAGINATION */
+.dash-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: var(--dash-surface-subtle);
+  border-top: 1px solid var(--dash-border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.dash-page-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--dash-border-dark);
+  background-color: var(--dash-surface);
+  border-radius: 3px;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.dash-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   PATIENT PROFILES & CONTACTS GRIDS
+   ========================================================================== */
+
+.dash-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.dash-item-card {
+  background-color: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--dash-shadow-sm);
+  position: relative;
+}
+
+.dash-item-card.active-profile-card {
+  border: 2px solid var(--dash-pigment);
+  background-color: #fffaf8;
+}
+
+.active-profile-tag {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background-color: var(--dash-pigment);
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.dash-item-header {
+  margin-bottom: 12px;
+}
+
+.dash-item-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.dash-item-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--dash-text-muted);
+}
+
+.dash-item-body {
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.dash-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.dash-chip {
+  font-size: 11.5px;
+  padding: 2px 8px;
+  background-color: var(--dash-surface-subtle);
+  border: 1px solid var(--dash-border);
+  border-radius: 3px;
+}
+
+.dash-chip-alert {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.dash-item-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--dash-border);
+  flex-wrap: wrap;
+}
+
+.dash-btn-sm {
+  padding: 8px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  min-height: 44px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.dash-btn-wa {
+  background-color: #25d366;
+  color: #ffffff;
+  border: 1px solid #1ebe57;
+  font-weight: 600;
+}
+
+.dash-btn-wa:hover {
+  background-color: #1ebe57;
+}
+
+/* ==========================================================================
+   SETTINGS VIEW
+   ========================================================================== */
+
+.settings-group {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.settings-label {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.settings-desc {
+  font-size: 12.5px;
+  color: var(--dash-text-muted);
+  margin-bottom: 12px;
+}
+
+.settings-select,
+.settings-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  border: 1px solid var(--dash-border-dark);
+  background-color: var(--dash-surface);
+  font-size: 13.5px;
+  border-radius: 3px;
+  min-height: 44px;
+}
+
+.prototype-notice-box {
+  background-color: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-left: 4px solid #d97706;
+  padding: 16px 20px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #78350f;
+  margin-top: 24px;
+}
+
+/* ==========================================================================
+   MODALS (DETAIL DRAWER, CRUD FORMS, CONFIRMATION)
+   ========================================================================== */
+
+.dash-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(31, 30, 28, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.dash-modal-panel {
+  background-color: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 6px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--dash-shadow-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--dash-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-modal-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dash-modal-body {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.dash-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--dash-border);
+  background-color: var(--dash-surface-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--dash-text-muted);
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--dash-border-dark);
+  border-radius: 3px;
+  font-size: 13.5px;
+  background-color: var(--dash-surface);
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+textarea.form-control {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS (DRAWER COLLAPSE)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .dash-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    box-shadow: var(--dash-shadow-lg);
+  }
+
+  .dash-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .dash-mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dash-charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-content-body {
+    padding: 20px 16px;
+  }
+}
+
+/* ==========================================================================
+   CPR METRONOME & FIRST-AID PROTOCOL TIMER
+   ========================================================================== */
+
+.cpr-timer-card {
+  background-color: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: var(--dash-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cpr-timer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--dash-border);
+  padding-bottom: 14px;
+}
+
+.cpr-timer-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .cpr-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cpr-pulse-box {
+  background-color: var(--dash-surface-subtle);
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cpr-pulse-ring {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: var(--dash-pigment-subtle);
+  border: 3px solid var(--dash-pigment);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 12px auto;
+  transition: transform 0.1s ease;
+}
+
+.cpr-pulse-ring.pulsing {
+  animation: cprBeat 0.545s infinite;
+}
+
+@keyframes cprBeat {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 57, 39, 0.4); }
+  50% { transform: scale(1.12); box-shadow: 0 0 0 14px rgba(179, 57, 39, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 57, 39, 0); }
+}
+
+.cpr-count-display {
+  font-family: 'Fraunces', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--dash-pigment);
+  line-height: 1;
+}
+
+.cpr-sub-prompt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--dash-text-muted);
+  margin-top: 6px;
+}
+
+.cpr-breath-alert {
+  background-color: var(--dash-amber-subtle);
+  border: 1px solid var(--dash-amber);
+  color: #92400e;
+  padding: 10px 14px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 12.5px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stopwatch-box {
+  background-color: var(--dash-surface-subtle);
+  border: 1px solid var(--dash-border);
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stopwatch-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--dash-teal);
+  text-align: center;
+  margin: 14px 0;
+}
+
+/* ==========================================================================
+   MEDICAL ID EMERGENCY CARD
+   ========================================================================== */
+
+.medical-id-card {
+  background: #ffffff;
+  border: 2px solid var(--dash-pigment);
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: var(--dash-shadow-md);
+  position: relative;
+}
+
+.medical-id-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--dash-border);
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+}
+
+.medical-id-badge {
+  background-color: var(--dash-pigment);
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+}
+
+.medical-id-blood {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dash-pigment);
+  border: 2px solid var(--dash-pigment);
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: var(--dash-pigment-subtle);
+}
+
+/* ==========================================================================
+   PRINT MEDIA HANDOVER SHEET
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+  }
+
+  .dash-sidebar,
+  .dash-topbar,
+  .history-toolbar,
+  .dash-pagination,
+  .dash-btn,
+  #btn-modal-close,
+  .dash-modal-footer,
+  .cpr-timer-card {
+    display: none !important;
+  }
+
+  .dash-modal-backdrop {
+    position: static !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+
+  .dash-modal-panel {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .print-handover-document {
+    display: block !important;
+    border: 2px solid #000;
+    padding: 20px;
+    margin: 0;
+  }
+}

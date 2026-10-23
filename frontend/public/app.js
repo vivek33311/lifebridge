@@ -434,8 +434,17 @@
     announceStatus('Executing three-tier verification sieve...');
 
     try {
+      // 1. Format and inject active patient profile context if selected
+      let textWithProfile = text;
+      if (activePatientProfile) {
+        const profileContext = formatProfileContext(activePatientProfile);
+        if (profileContext) {
+          textWithProfile = `${profileContext}\n\n${text}`;
+        }
+      }
+
       const payload = {
-        text,
+        text: textWithProfile,
         ...(processedImageData ? { image: processedImageData } : {})
       };
 
@@ -452,6 +461,10 @@
       }
 
       renderResults(data);
+
+      // 2. Automatically save completed analysis to logged-in user's history
+      saveAnalysisToHistory(data, activePatientProfile);
+
       announceStatus(`Analysis verified. Triage urgency tier: ${data.urgency_level}.`);
       resultsSection.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
@@ -708,4 +721,156 @@
       btn.disabled = false;
     }, 2000);
   }
+
+  /* ==========================================================================
+     DASHBOARD LAZY-LOADING, ACTIVE PROFILE & USER HISTORY INTEGRATION
+     ========================================================================== */
+
+  let activePatientProfile = null;
+  const activeProfileBanner = document.getElementById('terminal-active-profile-banner');
+  const activeProfileName = document.getElementById('terminal-profile-name');
+  const activeProfileDetails = document.getElementById('terminal-profile-details');
+  const btnClearActiveProfile = document.getElementById('btn-clear-active-profile');
+
+  function updateActiveProfileBanner() {
+    if (!activeProfileBanner) return;
+    if (activePatientProfile) {
+      if (activeProfileName) activeProfileName.textContent = activePatientProfile.name;
+      const details = [];
+      if (activePatientProfile.age) details.push(`Age ${activePatientProfile.age}y`);
+      if (activePatientProfile.allergies) details.push(`Allergies: ${activePatientProfile.allergies}`);
+      if (activeProfileDetails) activeProfileDetails.textContent = details.length > 0 ? `(${details.join(' | ')})` : '';
+      activeProfileBanner.style.display = 'flex';
+    } else {
+      activeProfileBanner.style.display = 'none';
+    }
+  }
+
+  if (btnClearActiveProfile) {
+    btnClearActiveProfile.addEventListener('click', () => {
+      activePatientProfile = null;
+      import('/src/dashboard/dashboardStore.js').then(({ setActiveProfile }) => {
+        setActiveProfile(null);
+      }).catch(() => {});
+      updateActiveProfileBanner();
+      announceStatus('Active patient profile context removed.');
+    });
+  }
+
+  function formatProfileContext(profile) {
+    if (!profile) return '';
+    const parts = [];
+    if (profile.name) parts.push(`Patient: ${profile.name}`);
+    if (profile.age) parts.push(`Age: ${profile.age}`);
+    if (profile.allergies) parts.push(`Known Allergies: ${profile.allergies}`);
+    if (profile.medications) parts.push(`Current Medications: ${profile.medications}`);
+    if (profile.notes) parts.push(`Medical Background: ${profile.notes}`);
+    return parts.length > 0 ? `[PATIENT PROFILE CONTEXT: ${parts.join(' | ')}]` : '';
+  }
+
+  function saveAnalysisToHistory(analysisData, profile) {
+    import('/src/dashboard/dashboardStore.js')
+      .then(({ getCurrentUser, loginDemoUser, saveAnalysisForUser }) => {
+        let user = getCurrentUser();
+        if (!user) {
+          user = loginDemoUser().user;
+        }
+        saveAnalysisForUser(user.id, analysisData, profile);
+        announceStatus(`Analysis verified and saved to ${user.name}'s history.`);
+      })
+      .catch((err) => {
+        console.warn('Could not auto-save analysis to user history:', err);
+      });
+  }
+
+  // Dashboard Router & Lazy-Loading Handler
+  let dashboardInstance = null;
+  const dashboardContainer = document.getElementById('dashboard-view');
+  const navLinkDashboard = document.getElementById('nav-link-dashboard');
+  const btnDemoAuth = document.getElementById('btn-demo-auth');
+
+  async function showDashboard() {
+    if (!dashboardContainer) return;
+
+    if (!dashboardInstance) {
+      announceStatus('Lazy-loading clinical decision dashboard...');
+      const { initDashboard } = await import('/src/dashboard/dashboard.js');
+      dashboardInstance = initDashboard(dashboardContainer, {
+        onNavigateToTriage: (selectedProfile) => {
+          showTriageTerminal(selectedProfile);
+        }
+      });
+    } else {
+      dashboardInstance.render();
+    }
+
+    if (heroStage) heroStage.style.display = 'none';
+    const mainStageEl = document.getElementById('main-stage');
+    if (mainStageEl) mainStageEl.style.display = 'none';
+    dashboardContainer.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showTriageTerminal(profile) {
+    if (profile !== undefined) {
+      activePatientProfile = profile;
+      updateActiveProfileBanner();
+    }
+    if (dashboardContainer) dashboardContainer.style.display = 'none';
+    if (heroStage) heroStage.style.display = '';
+    const mainStageEl = document.getElementById('main-stage');
+    if (mainStageEl) mainStageEl.style.display = '';
+
+    const terminalEl = document.getElementById('triage-terminal');
+    if (terminalEl) {
+      terminalEl.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        if (textArea) textArea.focus();
+      }, 350);
+    }
+  }
+
+  if (navLinkDashboard) {
+    navLinkDashboard.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.hash = '#dashboard';
+      showDashboard();
+    });
+  }
+
+  if (btnDemoAuth) {
+    btnDemoAuth.addEventListener('click', () => {
+      import('/src/dashboard/dashboardStore.js').then(({ loginDemoUser, getCurrentUser }) => {
+        const user = getCurrentUser() || loginDemoUser().user;
+        btnDemoAuth.textContent = `✓ ${user.name} (Demo)`;
+        window.location.hash = '#dashboard';
+        showDashboard();
+      }).catch(console.error);
+    });
+  }
+
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#dashboard') {
+      showDashboard();
+    } else if (dashboardContainer && dashboardContainer.style.display !== 'none') {
+      showTriageTerminal();
+    }
+  });
+
+  // Check initial store state & URL hash
+  import('/src/dashboard/dashboardStore.js')
+    .then(({ getActiveProfile, getCurrentUser }) => {
+      activePatientProfile = getActiveProfile();
+      updateActiveProfileBanner();
+
+      const user = getCurrentUser();
+      if (user && btnDemoAuth) {
+        btnDemoAuth.textContent = user.isDemo ? 'Dr. Patel (Demo)' : user.name;
+      }
+
+      if (window.location.hash === '#dashboard') {
+        showDashboard();
+      }
+    })
+    .catch(() => {});
 })();

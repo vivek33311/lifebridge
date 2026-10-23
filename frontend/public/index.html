@@ -19,13 +19,19 @@
       </a>
       <ul class="nav-links">
         <li><a href="#triage-terminal" class="nav-link">Terminal</a></li>
+        <li><a href="#dashboard" class="nav-link" id="nav-link-dashboard">Dashboard</a></li>
         <li><a href="#study-section" class="nav-link">Kinematic Model</a></li>
         <li><a href="#material-practice" class="nav-link">Architecture</a></li>
         <li><a href="#work-table" class="nav-link">Case Catalog</a></li>
       </ul>
-      <a href="tel:108" class="btn-editorial btn-pigment-outline" aria-label="Emergency Call 108 Ambulance">
-        Call 108 EMS
-      </a>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button type="button" id="btn-demo-auth" class="btn-editorial btn-hairline" style="cursor: pointer;" aria-label="Demo Account Access">
+          Demo Account
+        </button>
+        <a href="tel:108" class="btn-editorial btn-pigment-outline" aria-label="Emergency Call 108 Ambulance">
+          Call 108 EMS
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -68,6 +74,9 @@
       </div>
     </div>
   </header>
+
+  <!-- LAZY-LOADED CLINICAL DECISION DASHBOARD CONTAINER -->
+  <section id="dashboard-view" class="dashboard-view-section" style="display: none;" aria-label="Clinical Decision Dashboard"></section>
 
   <main id="main-stage">
     <!-- SECTION 3: SECTION DRAWING & INTEGRATED TRIAGE TERMINAL -->
@@ -175,6 +184,18 @@
             <div id="status-region" class="sr-only" role="status" aria-live="polite"></div>
 
             <form id="emergency-form" novalidate>
+              <!-- ACTIVE PATIENT PROFILE BANNER -->
+              <div id="terminal-active-profile-banner" style="display: none; margin-bottom: 16px; padding: 10px 14px; background: rgba(179,57,39,0.06); border: 1px solid rgba(179,57,39,0.25); border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <span style="color: var(--dash-text-muted, #736f68);">Active Profile:</span>
+                  <strong id="terminal-profile-name" style="color: var(--pigment, #b33927); margin-left: 4px;">Arjun Patel</strong>
+                  <span id="terminal-profile-details" style="color: #4b6b75; margin-left: 8px; font-size: 11px;">(Age 62 | Aspirin Allergy)</span>
+                </div>
+                <button type="button" id="btn-clear-active-profile" style="background: none; border: 1px solid rgba(179,57,39,0.3); border-radius: 2px; color: var(--pigment, #b33927); font-size: 11px; cursor: pointer; padding: 3px 8px; font-family: 'JetBrains Mono', monospace;" aria-label="Clear active patient profile">
+                  Clear ✕
+                </button>
+              </div>
+
               <div class="form-group-editorial">
                 <div class="label-bar">
                   <label for="emergency-text" class="mono-label">

@@ -156,6 +156,7 @@ If upstream Gemini connectivity is severed, throttled, or if the API key is not 
 ## 7. Limitations & Clinical Boundaries
 
 - **Decision Support Tool Only**: LifeBridge provides emergency first-aid recommendations for lay bystanders while professional medical help is in transit. It does not replace a clinical examination by an emergency physician.
+- **Data Storage & Privacy**: *Prototype: data is stored locally for demonstration and is not production-grade medical data storage.*
 - **Multimodal Visual Diagnostics**: Image recognition evaluates pill strips, superficial wounds, and context, but cannot perform radiologic interpretations (X-rays, CT scans).
 - **Network Constraints**: Optimal multimodal features require active cellular connectivity; in complete absence of network, bystanders must immediately dial **108** or **112**.
 

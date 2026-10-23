@@ -7,9 +7,10 @@
   "scripts": {
     "start": "node backend/src/server.js",
     "dev": "node --watch backend/src/server.js",
-    "test": "node --test backend/tests/analyzeRoute.test.js backend/tests/gemini.test.js backend/tests/safetyRules.test.js backend/tests/sanitize.test.js backend/tests/validation.test.js backend/tests/verifier.test.js && vitest run frontend/tests/bridge3d.test.js",
+    "build": "node --check backend/src/server.js && node --check backend/src/controllers/analyzeController.js && node --check backend/src/models/triageModel.js && node --check frontend/src/dashboard/dashboardMath.js && node --check frontend/src/dashboard/dashboardStore.js && node --check frontend/src/dashboard/dashboard.js && node -e \"console.log('Build validated successfully')\"",
+    "test": "node --test backend/tests/analyzeRoute.test.js backend/tests/gemini.test.js backend/tests/safetyRules.test.js backend/tests/sanitize.test.js backend/tests/validation.test.js backend/tests/verifier.test.js && vitest run frontend/tests/",
     "test:backend": "node --test backend/tests/analyzeRoute.test.js backend/tests/gemini.test.js backend/tests/safetyRules.test.js backend/tests/sanitize.test.js backend/tests/validation.test.js backend/tests/verifier.test.js",
-    "test:frontend": "vitest run frontend/tests/bridge3d.test.js"
+    "test:frontend": "vitest run frontend/tests/"
   },
   "engines": {
     "node": ">=20.0.0"

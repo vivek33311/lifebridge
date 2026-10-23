@@ -3,6 +3,12 @@
 
 > **Emergency Disclaimer**: *Decision support, not a diagnosis. In an emergency call 108 or 112 immediately.*
 
+### 🌐 Live Production & Repository Links
+- **Live Web Application**: [https://lifebridge-emergency-bridge.onrender.com](https://lifebridge-emergency-bridge.onrender.com)
+- **Health Check Endpoint**: [https://lifebridge-emergency-bridge.onrender.com/healthz](https://lifebridge-emergency-bridge.onrender.com/healthz)
+- **GitHub Public Repository**: [https://github.com/vivek33311/lifebridge](https://github.com/vivek33311/lifebridge)
+- **Automated Test Suite**: 46 Tests Passing (`43 node:test` + `3 vitest`)
+
 ---
 
 ## 1. Problem Statement Alignment
@@ -68,7 +74,7 @@ flowchart TD
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/lifebridge.git && cd lifebridge
+git clone https://github.com/vivek33311/lifebridge.git && cd lifebridge
 
 # 2. Install zero-bloat dependencies
 npm install

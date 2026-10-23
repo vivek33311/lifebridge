@@ -1,0 +1,41 @@
+{
+  "name": "lifebridge",
+  "version": "1.0.0",
+  "description": "Universal Gemini-powered bridge converting messy emergency inputs into structured, verified, life-saving actions",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test tests/analyzeRoute.test.js tests/gemini.test.js tests/safetyRules.test.js tests/sanitize.test.js tests/validation.test.js tests/verifier.test.js && vitest run tests/bridge3d.test.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "gemini",
+    "emergency-response",
+    "first-aid",
+    "decision-support",
+    "life-saving",
+    "108-ambulance",
+    "multimodal",
+    "hinglish"
+  ],
+  "author": "LifeBridge Engineering Team",
+  "license": "MIT",
+  "dependencies": {
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@google/genai": "^2.31.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "three": "^0.186.1",
+    "vitest": "^5.0.5",
+    "zod": "^3.23.8"
+  }
+}

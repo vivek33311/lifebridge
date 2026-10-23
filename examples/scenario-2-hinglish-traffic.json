@@ -1,0 +1,76 @@
+{
+  "scenario_name": "High-Impact Road Accident Trauma with Spinal Movement Hazard",
+  "input": {
+    "text": "Bhaiya Outer Ring Road flyover pe bike crash ho gaya. Ek car ne bike wale ko peeche se takkar mari. Rider road pe gira hua hai, gardan me bahut dard bata raha hai aur pair hilane me dikkat ho rahi hai. Maathe se khoon nikal raha hai. Yahan log bol rahe hain auto me daal kar pass ke clinic le jao."
+  },
+  "expected_output": {
+    "situation_summary": "High-velocity vehicular collision resulting in acute spinal trauma hazard (cervical pain with lower limb paresis) and open head laceration.",
+    "urgency_level": "CRITICAL",
+    "extracted_facts": [
+      {
+        "category": "condition",
+        "fact": "Motorcycle rear-end collision on highway flyover",
+        "source": "user text"
+      },
+      {
+        "category": "symptom",
+        "fact": "Severe cervical / neck pain and inability to move lower extremities",
+        "source": "user text"
+      },
+      {
+        "category": "symptom",
+        "fact": "Active bleeding from forehead laceration",
+        "source": "user text"
+      }
+    ],
+    "recommended_actions": [
+      {
+        "action": "Call 108 or 112 immediately for emergency medical transport.",
+        "reason": "Trauma requires certified spinal board and immobilization collar.",
+        "time_sensitivity": "Immediate (within 60 seconds)"
+      },
+      {
+        "action": "Keep patient flat and immobile. Stabilize head and neck without twisting or flexing.",
+        "reason": "Prevents irreversible spinal cord transection and permanent quadriplegia.",
+        "time_sensitivity": "Immediate"
+      },
+      {
+        "action": "Do NOT move patient into an auto-rickshaw or bend the spine.",
+        "reason": "Improper bystander transport causes catastrophic secondary spinal damage.",
+        "time_sensitivity": "Continuous precaution"
+      },
+      {
+        "action": "Apply gentle direct pressure to forehead cut with a clean cloth.",
+        "reason": "Controls external cranial hemorrhage without applying pressure directly to bone fracture.",
+        "time_sensitivity": "Immediate"
+      }
+    ],
+    "call_108_script": "Namaste 108 operator. Major road accident on Outer Ring Road flyover. A motorcyclist was struck by a car and has severe neck injury with loss of leg sensation and head bleeding. Spinal immobilization board and ALS ambulance required urgently.",
+    "missing_information": [
+      "Was the rider wearing a helmet?",
+      "Current pupillary reactivity and Glasgow Coma Scale (GCS) score"
+    ],
+    "confidence_score": 0.94,
+    "verification": {
+      "status": "VERIFIED_WITH_WARNINGS",
+      "reasoning": "1 deterministic safety override(s) applied. Unsafe bystander advice to transport via auto-rickshaw was strictly blocked and overridden with cervical immobilization protocol.",
+      "fact_audit": [
+        {
+          "fact": "Severe cervical / neck pain and inability to move lower extremities",
+          "status": "SUPPORTED",
+          "detail": "Corroborated directly from Hinglish text."
+        }
+      ],
+      "overrides_applied": [
+        {
+          "ruleId": "RULE_TRAUMA_IMMOBILIZATION",
+          "description": "Restricted patient movement following high-impact trauma to protect against catastrophic spinal cord transaction.",
+          "severity": "WARNING",
+          "replacementAction": "Keep patient flat and immobile. Stabilize head and neck without twisting or flexing."
+        }
+      ],
+      "pruned_actions": [],
+      "consistency_passed": true
+    }
+  }
+}

@@ -1,0 +1,328 @@
+/* Manhattan Bridge 3D Interactive UI - Glassmorphic Aesthetic & WCAG AA Contrast */
+
+:root {
+  --bg-panel: rgba(15, 23, 42, 0.85);
+  --bg-panel-hover: rgba(30, 41, 59, 0.95);
+  --border-panel: rgba(255, 255, 255, 0.16);
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --accent-blue: #38bdf8;
+  --accent-gold: #fbbf24;
+  --focus-ring: #38bdf8;
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-main);
+  background-color: #070c18;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+#canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+/* Glassmorphism Header HUD */
+.hud-header {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 10;
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-panel);
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  box-shadow: var(--shadow-lg);
+  max-width: 380px;
+}
+
+.hud-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.hud-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+
+.hud-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  background: rgba(56, 189, 248, 0.15);
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  text-transform: uppercase;
+}
+
+.hud-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  line-height: 1.35;
+}
+
+/* Controls Toolbar (Bottom Center) */
+.hud-controls-bar {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--bg-panel);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-panel);
+  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: var(--shadow-lg);
+  max-width: calc(100vw - 2rem);
+}
+
+/* Control Groups */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.control-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-panel);
+  margin: 0 0.25rem;
+}
+
+/* Accessible Interactive Buttons */
+.hud-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--border-panel);
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hud-btn:hover {
+  background: var(--bg-panel-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.hud-btn:active {
+  transform: translateY(0);
+}
+
+.hud-btn.active {
+  background: var(--accent-blue);
+  color: #0b132b;
+  font-weight: 600;
+  border-color: var(--accent-blue);
+}
+
+.hud-btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Time Slider */
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.time-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.time-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+}
+
+.time-slider:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+/* Info Side Panel (Modal Drawer) */
+.info-panel {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 360px;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  z-index: 20;
+  background: var(--bg-panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-panel);
+  border-radius: 14px;
+  padding: 1.4rem;
+  box-shadow: var(--shadow-lg);
+  transform: translateX(110%);
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.info-panel.open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-panel);
+}
+
+.info-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.close-btn:hover {
+  color: var(--text-main);
+}
+
+.close-btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+}
+
+.facts-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.facts-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.facts-table th {
+  text-align: left;
+  padding: 0.65rem 0.5rem 0.65rem 0;
+  color: var(--text-muted);
+  font-weight: 500;
+  width: 40%;
+}
+
+.facts-table td {
+  padding: 0.65rem 0 0.65rem 0.5rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+/* Accessibility & Screen Reader Classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Keyboard hint chip */
+.key-badge {
+  font-family: monospace;
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  margin-left: 0.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .hud-header {
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    max-width: none;
+    padding: 0.8rem 1rem;
+  }
+  .hud-controls-bar {
+    bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    gap: 0.4rem;
+  }
+  .info-panel {
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+  }
+  .control-divider {
+    display: none;
+  }
+}

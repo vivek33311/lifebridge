@@ -1,0 +1,87 @@
+{
+  "scenario_name": "Pediatric Hot Oil Scald with Dangerous Home Remedy & NSAID Contraindication",
+  "input": {
+    "text": "Khaulta hua sarson ka tel (hot mustard oil) 8 saal ke bachhe ke right arm par gir gaya hai. Skin pe bade chaale (blisters) pad gaye hain aur chamdi utar rahi hai. Bachha bahut ro raha hai. Padosi bol rahe hain ki baraf (ice) aur amul butter laga do aur dard ke liye Combiflam (Ibuprofen) de do. Note: Bachhe ko Brufen / NSAIDs se severe asthma attack aur allergy hoti hai."
+  },
+  "expected_output": {
+    "situation_summary": "Second-degree partial thickness thermal burn on pediatric right forearm with active contraindication hazards for NSAIDs and dangerous topical home remedies.",
+    "urgency_level": "HIGH",
+    "extracted_facts": [
+      {
+        "category": "condition",
+        "fact": "Second-degree hot oil scald on 8-year-old child's right forearm with blistering",
+        "source": "user text"
+      },
+      {
+        "category": "allergy",
+        "fact": "Severe hypersensitivity / anaphylactoid bronchospasm to Ibuprofen (Brufen/Combiflam/NSAIDs)",
+        "source": "user text"
+      },
+      {
+        "category": "symptom",
+        "fact": "Intense pediatric pain and acute distress",
+        "source": "user text"
+      }
+    ],
+    "recommended_actions": [
+      {
+        "action": "Call 108 or 112 immediately for emergency medical transport.",
+        "reason": "Pediatric scalds require specialized burn center assessment and sterile dressing.",
+        "time_sensitivity": "Immediate (within 60 seconds)"
+      },
+      {
+        "action": "Cool burn area under clean, gentle running tap water for 10-20 minutes. Do NOT apply ice, butter, toothpaste, or oil.",
+        "reason": "Ice causes secondary hypothermic tissue ischemia, and butter traps heat and introduces virulent bacterial infection.",
+        "time_sensitivity": "Immediate (next 10 minutes)"
+      },
+      {
+        "action": "Do NOT administer Aspirin or NSAIDs (Combiflam/Brufen/Ibuprofen) due to documented allergy. Avoid NSAID analgesia to prevent acute bronchospasm.",
+        "reason": "Documented NSAID hypersensitivity contraindicates Ibuprofen to prevent life-threatening asthma / anaphylaxis.",
+        "time_sensitivity": "Immediate contraindication"
+      },
+      {
+        "action": "Cover the scalded area loosely with clean plastic cling wrap or a sterile non-adherent cloth.",
+        "reason": "Protects raw nerve endings from air currents, dramatically reducing pain and preventing infection.",
+        "time_sensitivity": "After cooling"
+      }
+    ],
+    "call_108_script": "Namaste 108 operator. Pediatric burn emergency. An 8-year-old child has extensive hot oil blistering burns on the right forearm. Patient has severe allergy to NSAID painkillers. Please dispatch an ambulance to [Address/Landmark].",
+    "missing_information": [
+      "Total percentage of Body Surface Area (TBSA) affected",
+      "Any circumferential burns around the wrist or fingers"
+    ],
+    "confidence_score": 0.95,
+    "verification": {
+      "status": "VERIFIED_WITH_WARNINGS",
+      "reasoning": "2 deterministic safety override(s) applied. Ice/butter home remedies were blocked and replaced with cool running water. Combiflam (Ibuprofen) was strictly blocked due to reported pediatric NSAID allergy.",
+      "fact_audit": [
+        {
+          "fact": "Second-degree hot oil scald on 8-year-old child's right forearm with blistering",
+          "status": "SUPPORTED",
+          "detail": "Confirmed from user text."
+        },
+        {
+          "fact": "Severe hypersensitivity / anaphylactoid bronchospasm to Ibuprofen (Brufen/Combiflam/NSAIDs)",
+          "status": "SUPPORTED",
+          "detail": "Documented in user allergy history."
+        }
+      ],
+      "overrides_applied": [
+        {
+          "ruleId": "RULE_BURNS_NO_ICE_OR_IRRITANTS",
+          "description": "Overrode harmful burn remedy. Ice induces tissue frostbite/ischemia, while butter/toothpaste traps heat and causes severe infection.",
+          "severity": "WARNING",
+          "replacementAction": "Cool burn area under clean, gentle running tap water for 10-20 minutes. Do NOT apply ice, butter, toothpaste, or oil."
+        },
+        {
+          "ruleId": "RULE_ALLERGY_MEDICATION_CONFLICT",
+          "description": "Detected dangerous contraindication: Aspirin / NSAID allergy conflict. Overrode medication advice with allergy-safe protocol.",
+          "severity": "CRITICAL",
+          "replacementAction": "Do NOT administer Aspirin or NSAIDs due to documented allergy."
+        }
+      ],
+      "pruned_actions": [],
+      "consistency_passed": true
+    }
+  }
+}

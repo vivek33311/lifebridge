@@ -1,0 +1,80 @@
+{
+  "scenario_name": "Acute Cardiac Emergency with Bengaluru Traffic Context",
+  "input": {
+    "text": "Papa is 62 years old, having severe chest tightness and crushing pain radiating to his left shoulder and arm for the last 25 minutes. Bahut jyada paseena aa raha hai aur saans lene me dikkat ho rahi hai. He takes Amlodipine 5mg for high BP. Currently at MG Road, Bangalore near Metro Pillar 142. Heavy evening traffic jammed outside."
+  },
+  "expected_output": {
+    "situation_summary": "Suspected acute coronary syndrome / myocardial infarction in a 62-year-old male with pre-existing hypertension, compounded by traffic delays near MG Road Bangalore.",
+    "urgency_level": "CRITICAL",
+    "extracted_facts": [
+      {
+        "category": "symptom",
+        "fact": "Crushing chest tightness radiating to left shoulder and arm for 25 minutes",
+        "source": "user text"
+      },
+      {
+        "category": "symptom",
+        "fact": "Profuse diaphoresis (sweating) and dyspnea (shortness of breath)",
+        "source": "user text"
+      },
+      {
+        "category": "medication",
+        "fact": "Amlodipine 5mg daily for hypertension",
+        "source": "user text"
+      },
+      {
+        "category": "condition",
+        "fact": "Pre-existing systemic hypertension",
+        "source": "user text"
+      }
+    ],
+    "recommended_actions": [
+      {
+        "action": "Call 108 or 112 immediately and inform operator of suspected cardiac arrest / heart attack.",
+        "reason": "Requires Advanced Life Support (ALS) ambulance with onboard defibrillator and ECG.",
+        "time_sensitivity": "Immediate (within 60 seconds)"
+      },
+      {
+        "action": "Seat patient in a half-sitting position (W-position) with knees bent and back supported.",
+        "reason": "Reduces cardiac preload and relieves respiratory strain.",
+        "time_sensitivity": "Immediate"
+      },
+      {
+        "action": "Loosen tight neck collars, belts, and restrictive clothing.",
+        "reason": "Maximizes thoracic expansion and eases breathing.",
+        "time_sensitivity": "Immediate"
+      },
+      {
+        "action": "Do NOT allow patient to walk, stand, or exert themselves.",
+        "reason": "Physical exertion increases myocardial oxygen demand.",
+        "time_sensitivity": "Continuous"
+      }
+    ],
+    "call_108_script": "Namaste 108 operator. This is an acute cardiac emergency. A 62-year-old male is experiencing severe radiating chest pain, sweating, and difficulty breathing for 25 minutes. Location: MG Road, Bangalore, near Metro Pillar 142. Please dispatch an Advanced Life Support ambulance immediately.",
+    "missing_information": [
+      "Known allergy to Aspirin or NSAIDs",
+      "History of active peptic ulcers or internal bleeding",
+      "Exact diabetic status"
+    ],
+    "confidence_score": 0.96,
+    "verification": {
+      "status": "VERIFIED",
+      "reasoning": "All facts corroborated from user description; clinical actions conform to emergency cardiology guidelines.",
+      "fact_audit": [
+        {
+          "fact": "Crushing chest tightness radiating to left shoulder and arm for 25 minutes",
+          "status": "SUPPORTED",
+          "detail": "Directly reported in input."
+        },
+        {
+          "fact": "Amlodipine 5mg daily for hypertension",
+          "status": "SUPPORTED",
+          "detail": "Explicitly stated medication history."
+        }
+      ],
+      "overrides_applied": [],
+      "pruned_actions": [],
+      "consistency_passed": true
+    }
+  }
+}
